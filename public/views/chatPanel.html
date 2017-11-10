@@ -1,0 +1,207 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    img {
+        border-radius: 5px 5px 0 0;
+    }
+
+    .container {
+        padding: 2px 16px;
+    }
+
+    #replyform {
+        width: 790px;
+    }
+
+    element.style {
+        margin: 0px;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: auto !important;
+        z-index: 1000;
+        display: none;
+        float: left;
+        min-width: 13rem !important;
+        padding: .5rem 0;
+        margin: .125rem 0 0;
+        font-size: 1rem;
+        color: #292b2c;
+        text-align: center;
+        list-style: none;
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid rgba(0, 0, 0, .15);
+        border-radius: .25rem;
+    }
+
+    .Qbox {
+        display: block;
+        min-height: 500px;
+        margin: 0px auto;
+        padding: 10%;
+        width: 100%;
+        border: 2px solid #464a4c !important;
+        border-radius: 10px;
+        background-color: #ddd !important;
+        text-align: center;
+        padding: 10px;
+        /* opacity: 0.6; */
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: auto !important;
+        z-index: 1000;
+        display: none;
+        float: left;
+        min-width: 13rem !important;
+        padding: .5rem 0;
+        margin: .125rem 0 0;
+        font-size: 1rem;
+        color: #292b2c;
+        text-align: center;
+        list-style: none;
+        background-color: #636c72 !important;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid rgba(0, 0, 0, .15);
+        border-radius: .25rem;
+    }
+</style>
+<div ng-controller="singleController as single">
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse" style="background-color:#3F51B5!important;">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="container">
+            <a class="navbar-brand" href="">
+                Support App</a>
+            <div class="collapse navbar-collapse pull-right" id="navbarExample">
+            </div>
+            <ul class="nav navbar-nav pull-right">
+                <button align="right" type="button" style="margin:7px" class="btn btn-logged btn-success dropdown-toggle" ng-init="single.getName()"
+                    id="logout" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{single.user}}
+                    <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu">
+                    <li align="center">
+                        <a href="" ng-click="single.logout()">Logout</a>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+    </nav>
+    <br/>
+    <br/>
+
+    <div id="chatbox">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8 col-xs-offset-2 col-xs-8 text">
+                    <div id="info">
+                        <div id="title">
+                            <h2 align="center">Query Details</h2>
+                        </div>
+
+                        <label style="color:black; font-family:bold; font-size: 2em;" align="center">Query Title: {{single.title}}
+                        </label>
+                        <br>
+                        <label style="color:black; font-family: bold; font-size: 1.5em;" align="center">Query Details: {{single.Detail}}
+                        </label>
+                        <br>
+                        <hr> Posted By
+                        <span style="color:blue"> {{single.sender}}</span>
+                        <div class="datetime">{{single.date | date: "MMM dd,y"}} at {{single.date | date: "HH:mm"}}</div>
+                        <hr>
+                    </div>
+                    <div>
+                        <div align="center" id="btnCangeStatus">
+                            <button ng-if="single.userId == single.userID || single.user == 'Admin'" class="btn btn-primary btn-xs" ng-click="single.openclose()">{{single.getStatus()}}</button>
+                            <a href="#" class="btn btn-primary" title="Previous Page" onclick="history.go(-1);event.preventDefault();">Go Back</a>
+                        </div>
+                        <br/>
+                        <h4 align="center">Send A Reply</h4>
+                        <br/>
+                    </div>
+                </div>
+
+                <hr/>
+                <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8 col-xs-offset-2 col-xs-8 text">
+                    <div id="messages">
+                        <ul ng-repeat="message in single.messages">
+                            <li ng-class="{'message':{{message.sender !== 'Admin'}} , 'messageadmin': {{message.sender === 'Admin'}} }" id="scrollB">
+                                <div class="row">
+                                    <div class="card">
+                                        <div class="container">
+                                            <div class="msgtext">
+                                                <ng-avatar initials="{{message.sender[0]}}" bg-color="green" text-color="white" round-shape="true"> </ng-avatar>Posted By
+                                                <span style="color:blue"> {{message.sender}}</span>
+                                            </div>
+                                            <div class="datetime">{{message.created | date: "MMM dd,y"}} at {{message.created | date: "HH:mm"}}</div>
+                                            <br/>
+
+                                            <div class="msgtext">Message: {{message.queryText}} </div>
+                                            <br/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <form id="replyform" class="w3-container w3-card-4 w3-light-grey" ng-submit="single.createMessage()">
+                    <div class="container">
+                        <div id="form">
+                            <div class="col-lg-offset-2 col-lg-6 col-md-offset-2 col-md-6 col-sm-offset-2 col-sm-6 col-xs-offset-2 col-xs-6 text text-center">
+                                <label style="color:black; font-family: bold; font-size: 1.5em;">Reply Message:</label>
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </div>
+                                    <div class="w3-rest">
+                                        <input id="messageText" class="w3-input w3-border w3-round-large" type="text" name="queryText" placeholder="Message..." ng-model="single.queryText"
+                                            required="true">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br/>
+
+                            <div id="sendButton" class=" col-lg-2 col-md-2  col-sm-2  col-xs-2 text text-center">
+                                <button align="center" id="sendbtn" type="submit" name="send" value="send" class="btn btn-primary btn-success btn-xs">Reply To Query</button>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+
+
+<script type="text/javascript">// <![CDATA[
+    function goBack() {
+        window.history.back();
+        return false;
+    }
+// ]]></script>
