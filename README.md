@@ -38,6 +38,10 @@ Come back to your first terminal and run ```node server```
 
 Open ```localhost:3000``` in your browser.
 
+#### Note
+
+This project uses a package which sends automated emails to the users. Provide your own email account credentials in ```controllers/tickets.js```
+
 ### How it was made
 
 - OS: Windows 10
