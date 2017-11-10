@@ -36,6 +36,8 @@ Open a new terminal and go to MongoDB's installation directory, for e.g. in Wind
 
 Come back to your first terminal and run ```node server```
 
+Open ```localhost:3000``` in your browser.
+
 ### How it was made
 
 - OS: Windows 10
